@@ -1,0 +1,17 @@
+services:
+  server:
+    build: .
+    environment:
+      - MODEL=hf-tool-llama3.2-3b-32k
+      - MODEL_URL=http://0.0.0.0:11434/
+    ports:
+      - 19140:8000
+    volumes:
+      - /home/a/docker-data/MCP/hf-summarizer:/app
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://0.0.0.0:8000/health-check || exit 1"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
