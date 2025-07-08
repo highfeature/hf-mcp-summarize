@@ -7,7 +7,8 @@ services:
     ports:
       - 19140:8000
     volumes:
-      - /home/a/docker-data/MCP/hf-summarizer:/app
+      # - /home/a/docker-data/MCP/hf-mcp-summarizer:/app
+      - hf-mcp-summarizer:/app
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://0.0.0.0:8000/health-check || exit 1"]
@@ -15,3 +16,6 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
+
+volumes:
+  hf-mcp-summarizer:

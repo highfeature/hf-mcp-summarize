@@ -25,5 +25,5 @@ RUN uv sync --frozen --no-install-project --no-dev --python-preference=only-syst
 COPY . .
 
 # Run the FastAPI application
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
