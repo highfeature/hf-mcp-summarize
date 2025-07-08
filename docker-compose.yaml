@@ -7,6 +7,7 @@ services:
     ports:
       - 19140:8000
     volumes:
+      # If y use remote folder as volume, y will need to copy manually files in it.
       # - /home/a/docker-data/MCP/hf-mcp-summarizer:/app
       - hf-mcp-summarizer:/app
     restart: unless-stopped
