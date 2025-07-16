@@ -2,12 +2,24 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastmcp import FastMCP
 from pydantic import BaseModel
+import sentry_sdk
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
 from src.summarizers.text_summarizer import TextSummarizer
 
+# Initialize Sentry =========================================
+sentry_sdk.init(
+    dsn="http://a87a15429de8e0c6e17217403ece2c13@0.0.0.0:18990/2",
+    # Add request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+)
 
 # Initialize FastMCP =========================================
-mcp = FastMCP("HighfeatureMcpServer")
+mcp = FastMCP("HighfeatureMcpServerSummarize")
 
 # Define tool for FastMCP
 
@@ -61,6 +73,9 @@ app = FastAPI(
     openapi_url="/mcp-server/openapi.json",
 )
 
+# add sentry middleware
+app.add_middleware(SentryAsgiMiddleware)
+
 # Mount the FastMCP app to the FastAPI app
 app.mount("/mcp-server", mcp_app, "mcp")
 
@@ -89,3 +104,18 @@ async def root() -> dict[str, str]:
 async def health_check() -> dict[str, str]:
     """Health check endpoint."""
     return {"status": "healthy"}
+
+@app.get("/sentry-debug")
+async def trigger_error():
+    division_by_zero = 1 / 0
+
+# import asyncio
+# # from server import run, server
+
+# async def main():
+#     app.run()
+#     # asyncio.run(app,run())
+
+# if __name__ == "__main__":
+#     # asyncio.run(main())
+#     app.run()
