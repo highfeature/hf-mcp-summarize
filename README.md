@@ -70,8 +70,14 @@ Body:
 ## Local launch & debug
 ### Local launch
 ```shell
-export MODEL=hf-tool-llama3.2-3b-32k
-export MODEL_URL=http://0.0.0.0:11434/
+# change with the LLM you want to use for summarize
+export MODEL="hf-tool-llama3.2-3b-32k"
+# change the URL of Ollama server
+export MODEL_URL="http://0.0.0.0:11434/"
+# change the 0.0.0.0:18990 not working for now when full docker to
+# the IP address of sentry-nginx-1 and it's port.
+# - SENTRY_URL="http://a87a15429de8e0c6e17217403ece2c13@0.0.0.0:18990/2"
+export SENTRY_URL="http://a87a15429de8e0c6e17217403ece2c13@172.31.0.69:80/2"
 source .venv/bin/activate
 uv run uvicorn src.main:app --reload --port=19140 --log-level debug
 ```
