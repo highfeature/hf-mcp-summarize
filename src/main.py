@@ -1,15 +1,15 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from fastmcp import FastMCP
+import os
 from pydantic import BaseModel
 import sentry_sdk
 from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
-
 from src.summarizers.text_summarizer import TextSummarizer
 
 # Initialize Sentry =========================================
 sentry_sdk.init(
-    dsn="http://a87a15429de8e0c6e17217403ece2c13@0.0.0.0:18990/2",
+    dsn=os.getenv("SENTRY_URL", "http://a87a15429de8e0c6e17217403ece2c13@0.0.0.0:18990/2"),
     # Add request headers and IP for users,
     # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,

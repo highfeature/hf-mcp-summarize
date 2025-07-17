@@ -2,8 +2,9 @@ services:
   server:
     build: .
     environment:
-      - MODEL=hf-tool-llama3.2-3b-32k
-      - MODEL_URL=http://0.0.0.0:11434/
+      - SENTRY_URL=http://a87a15429de8e0c6e17217403ece2c13@0.0.0.0:18990/2
+    networks: 
+      - sentry_default
     ports:
       - 19140:8000
     volumes:
@@ -20,3 +21,7 @@ services:
 
 volumes:
   hf-mcp-summarizer:
+
+networks:
+  sentry_default:
+    external: true
