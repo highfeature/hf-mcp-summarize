@@ -25,6 +25,7 @@ Add in your mcp_settings.json
 ```json
 {
     "mcpServers": {
+        ...
         "hf-mcp-summarize": {
             "disabled": false,
             "type": "streamable-http",
@@ -32,6 +33,7 @@ Add in your mcp_settings.json
             "note": "For Streamable HTTP connections, add this URL directly in your MCP Client",
             "alwaysAllow": []
         },
+        ...
     }
 }
 ```
@@ -41,6 +43,7 @@ Add in opencode.json
 {
   ...
   "mcp": {
+    ...
     "hf-mcp-summarize": {
       "type": "remote",
       "url": "http://0.0.0.0:19140/mcp-server/mcp/",
@@ -52,6 +55,7 @@ Add in opencode.json
     },
     ...
   }
+  ...
 }
 ```
 
