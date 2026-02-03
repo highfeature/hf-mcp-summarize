@@ -1,14 +1,16 @@
 import requests
 from .base import BaseSummarizer
+from dotenv import load_dotenv
 import os
 
-MODEL_URL=os.environ.get('MODEL_URL')
-MODEL=os.environ.get('MODEL')
+load_dotenv()
+
+MODEL_URL=os.getenv('MODEL_URL')
+MODEL_NAME=os.getenv('MODEL_NAME')
 SUMMARIZE_PROMPT = """You are the summarizing agent in a long chain of agents.
 It is your job to responsibly capture the entirety of what is being described in incoming documents.
 You can scrap small details, but you must make sure to hit all the major points.
 These documents will be used in RAG down the line.
-
 
 For example, given the following text:
 "I've got updates on the tiny brains if\nyou are not familiar with brain\norganoids they are tiny human brains\nthat we can grow from stem cells you can\ngrow them in a literal jar if you want\nto but you can also hook them up to a\ncomputer or llm since a company called\nfinal spark decided to release brain\norganoid computation for industrial use\n"
@@ -29,7 +31,7 @@ You always sanitize data. You always remove \n. You never mention yourself in yo
 class TextSummarizer(BaseSummarizer):
     def summarize(self, data):
         payload = {
-            "model":MODEL,
+            "model":MODEL_NAME,
             "system": SUMMARIZE_PROMPT,
             "prompt":data,
             "stream":False,
@@ -51,7 +53,5 @@ class TextSummarizer(BaseSummarizer):
         return {
             'type': 'text',
             'source': url,
-            'error': result.status_code   
+            'error': result.status_code
         }
-
-

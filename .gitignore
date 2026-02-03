@@ -153,3 +153,8 @@ Desktop.ini
 # Repomix output
 repomix-output.txt
 repomix-output.xml
+
+# trash file
+*.bak
+*.old
+*.orig

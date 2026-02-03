@@ -1,11 +1,7 @@
-import json
 import pytest
-from collections.abc import Callable, Generator
 
-# from fastmcp.client.transports import StreamableHttpTransport
 from fastmcp.client import Client
 from fastapi.testclient import TestClient
-from fastmcp.utilities.tests import run_server_in_process
 
 from src.main import app, mcp
 
