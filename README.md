@@ -10,7 +10,6 @@ I was looking for a skeleton model for my lab, that can have the full set of:
 - All that in one Docker container that I can pop up when I want or need
   (reducing the number of memory, ports, .... used on my descktop/server)
 
-##
 This FastAPI/FastMCP server acts to summarize a given chunk of text.
 
 It is assumed that you are running an ollama instance in an adjacent container with the default port available.
@@ -18,6 +17,42 @@ It is assumed that you are running an ollama instance in an adjacent container w
 run it by:
 ```sh
 (hf-mcp-summarize) $ uvicorn main:app --reload --port=19140
+```
+
+## Add it to your AI:
+### Kilo
+Add in your mcp_settings.json
+```json
+{
+    "mcpServers": {
+        "hf-mcp-summarize": {
+            "disabled": false,
+            "type": "streamable-http",
+            "url": "http://0.0.0.0:19140/mcp-server/mcp/",
+            "note": "For Streamable HTTP connections, add this URL directly in your MCP Client",
+            "alwaysAllow": []
+        },
+    }
+}
+```
+### Opencode
+Add in opencode.json
+```json
+{
+  ...
+  "mcp": {
+    "hf-mcp-summarize": {
+      "type": "remote",
+      "url": "http://0.0.0.0:19140/mcp-server/mcp/",
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:MY_API_KEY}"
+      },
+      "enabled": true
+    },
+    ...
+  }
+}
 ```
 
 ## 📦 List of Endpoints
